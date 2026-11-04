@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gửi Chị Ánh ❤️</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#ff9ec4,#ffd6e7,#ffeef5);
+    overflow:hidden;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+}
+
+.card{
+    width:700px;
+    max-width:90%;
+    background:rgba(255,255,255,.9);
+    padding:30px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 0 25px pink;
+    z-index:2;
+}
+
+h2{
+    color:#ff2d75;
+    margin-bottom:30px;
+}
+
+button{
+    padding:12px 25px;
+    margin:10px;
+    font-size:18px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.yes{
+    background:#ff4f8b;
+    color:white;
+}
+
+.no{
+    background:#777;
+    color:white;
+}
+
+#message{
+    color:#ff2d75;
+    font-size:22px;
+    line-height:1.8;
+}
+
+.heart{
+    position:fixed;
+    top:-50px;
+    color:red;
+    animation:fall linear infinite;
+    z-index:1;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-50px);
+        opacity:1;
+    }
+    to{
+        transform:translateY(110vh);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+
+<h2 id="question">
+Chị Ánh có đồng ý trả lời câu hỏi tiếp theo của em không? ❤️
+</h2>
+
+<div id="buttons">
+<button class="yes" onclick="nextQuestion()">Có</button>
+<button class="no" id="noBtn">Không</button>
+</div>
+
+<div id="message"></div>
+
+</div>
+
+<script>
+
+const questions=[
+{
+q:"Sau thời gian nói chuyện của hai chị em mình chị có thấy thích em không? ❤️",
+answers:["Có","Có"]
+},
+{
+q:"Gu bạn trai của chị là gì? 🥰",
+answers:["Em","Không ai khác ngoài em"]
+},
+{
+q:"Chị có đồng ý tìm hiểu và hẹn hò với em không? 💍",
+answers:["Có","Chị chờ em nói câu này lâu lắm rồi ❤️"]
+},
+{
+q:"Chị giờ muốn xưng hô với em như nào? 😊",
+answers:["Anh em","Chị em"]
+}
+];
+
+let index=0;
+
+function nextQuestion(){
+
+if(index<questions.length){
+
+document.getElementById("question").innerHTML=questions[index].q;
+
+let html="";
+
+questions[index].answers.forEach(answer=>{
+html+=`<button class="yes" onclick="nextQuestion()"></button>`;
+});
+
+document.getElementById("buttons").innerHTML=html;
+
+index++;
+
+}else{
+
+document.getElementById("buttons").style.display="none";
+
+document.getElementById("question").innerHTML="❤️ Gửi Chị Ánh ❤️";
+
+document.getElementById("message").innerHTML=`
+Dù chỉ gặp nhau vào mùa hè năm đó,
+được đi chơi cùng chị vài ngày thôi,
+nhưng em đã tương tư chị từ lúc nào chẳng hay.
+
+Em luôn mong có một ngày đủ can đảm
+để nói ra những điều trong lòng.
+
+Em thật sự thích chị.
+
+Hy vọng từ hôm nay,
+hai đứa mình sẽ cùng nhau viết tiếp
+một câu chuyện thật đẹp.
+
+❤️ Yêu chị nhiều ❤️
+`;
+
+}
+
+}
+
+// ==================
+// NÚT KHÔNG CHẠY LIÊN TỤC
+// ==================
+
+const noBtn=document.getElementById("noBtn");
+
+function moveButton(){
+
+const maxX=window.innerWidth-noBtn.offsetWidth-20;
+const maxY=window.innerHeight-noBtn.offsetHeight-20;
+
+const x=Math.random()*maxX;
+const y=Math.random()*maxY;
+
+noBtn.style.position="fixed";
+noBtn.style.left=x+"px";
+noBtn.style.top=y+"px";
+}
+
+noBtn.addEventListener("mouseenter",moveButton);
+
+document.addEventListener("mousemove",(e)=>{
+
+const rect=noBtn.getBoundingClientRect();
+
+const dx=e.clientX-(rect.left+rect.width/2);
+const dy=e.clientY-(rect.top+rect.height/2);
+
+const distance=Math.sqrt(dx*dx+dy*dy);
+
+if(distance<120){
+moveButton();
+}
+
+});
+
+// ==================
+// TRÁI TIM RƠI
+// ==================
+
+for(let i=0;i<40;i++){
+
+let heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*100+"vw";
+
+heart.style.fontSize=(15+Math.random()*25)+"px";
+
+heart.style.animationDuration=(3+Math.random()*5)+"s";
+
+heart.style.animationDelay=Math.random()*5+"s";
+
+document.body.appendChild(heart);
+
+}
+
+</script>
+
+</body>
+</html>
